@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karma Tara Residency - Employee Daily Report</title>
+  <style>
+    :root{
+      --bg:#f5f1ea;
+      --card:#ffffff;
+      --ink:#2b2b2b;
+      --muted:#6b6b6b;
+      --brand:#6e4f3a;
+      --brand-2:#9c7758;
+      --line:#e7ddd2;
+      --soft:#f8f4ef;
+      --ok:#2f7d32;
+      --warn:#b26a00;
+      --danger:#b23b3b;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#f3eee6 0%,#faf8f5 100%);
+      color:var(--ink);
+    }
+    .wrap{
+      max-width:1080px;
+      margin:0 auto;
+      padding:18px;
+    }
+    .hero{
+      background:linear-gradient(135deg,var(--brand),#84634a);
+      color:#fff;
+      border-radius:24px;
+      padding:22px 20px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .hero h1{
+      margin:0;
+      font-size:clamp(1.5rem,3vw,2.2rem);
+      line-height:1.15;
+    }
+    .hero p{
+      margin:8px 0 0;
+      opacity:.92;
+      font-size:.98rem;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+      align-items:start;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .card h2{
+      margin:0 0 12px;
+      font-size:1.1rem;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:.92rem;
+      margin-top:-4px;
+      margin-bottom:12px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .field{
+      margin-bottom:12px;
+    }
+    label{
+      display:block;
+      font-size:.9rem;
+      font-weight:700;
+      margin:0 0 6px;
+    }
+    input[type="text"], input[type="date"], select, textarea{
+      width:100%;
+      border:1px solid #d8c8b8;
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:16px;
+      background:#fff;
+      color:var(--ink);
+      outline:none;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color:var(--brand-2);
+      box-shadow:0 0 0 3px rgba(156,119,88,.12);
+    }
+    textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+    button{
+      border:0;
+      border-radius:16px;
+      padding:12px 16px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      transition:transform .05s ease, opacity .2s ease;
+    }
+    button:active{transform:scale(.99)}
+    .btn-primary{background:var(--brand); color:#fff;}
+    .btn-soft{background:var(--soft); color:var(--brand); border:1px solid var(--line);}
+    .btn-green{background:var(--ok); color:#fff;}
+    .btn-orange{background:var(--warn); color:#fff;}
+    .btn-red{background:var(--danger); color:#fff;}
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:12px 0 10px;
+    }
+    .section-head h3{
+      margin:0;
+      font-size:1rem;
+    }
+    .entry{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fffdfa;
+      padding:14px;
+      margin:0 0 12px;
+    }
+    .entry-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .pill{
+      display:inline-block;
+      padding:7px 10px;
+      border-radius:999px;
+      background:#efe3d7;
+      color:var(--brand);
+      font-size:.82rem;
+      font-weight:700;
+    }
+    .remove-btn{
+      background:#fff;
+      border:1px solid #e7caca;
+      color:var(--danger);
+      padding:9px 12px;
+    }
+    .report-box{
+      white-space:pre-wrap;
+      background:#fffdfa;
+      border:1px dashed #cfb9a6;
+      border-radius:18px;
+      padding:14px;
+      min-height:320px;
+      font-size:.96rem;
+      line-height:1.45;
+    }
+    .mini{
+      color:var(--muted);
+      font-size:.85rem;
+      margin-top:8px;
+    }
+    .chip-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:8px 0 0;
+    }
+    .chip{
+      background:#f2ebe4;
+      color:var(--brand);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 12px;
+      font-size:.9rem;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .footer-note{
+      text-align:center;
+      color:var(--muted);
+      font-size:.84rem;
+      margin-top:14px;
+    }
+    @media (max-width: 820px){
+      .grid{grid-template-columns:1fr}
+      .row{grid-template-columns:1fr}
+      .wrap{padding:14px}
+      .hero{padding:18px}
+      button, .chip{min-height:46px}
+      select, input[type="text"], input[type="date"], textarea{min-height:48px}
+      .section-head{align-items:stretch; flex-direction:column}
+      .section-head button{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Karma Tara Residency<br>Employee Daily Report</h1>
+      <p>Fresh rebuild based on your Excel daily report sheet. Mobile-friendly, simple, and ready for WhatsApp reporting.</p>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h2>Daily Report Form</h2>
+          <div class="sub">Fill in today’s work and the app will build a clean WhatsApp-ready report.</div>
+
+          <div class="row">
+            <div class="field">
+              <label for="reportDate">Date</label>
+              <input type="date" id="reportDate">
+            </div>
+
+            <div class="field">
+              <label for="staffName">Staff Name</label>
+              <select id="staffName"></select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Add Staff Name</label>
+            <div class="row">
+              <input type="text" id="newStaffName" placeholder="Type new staff name">
+              <button class="btn-soft" id="addStaffBtn" type="button">Add Staff</button>
+            </div>
+          </div>
+
+          <div class="section-head">
+            <h3>Suite Room</h3>
+            <button class="btn-primary" id="addSuiteBtn" type="button">+ Add Suite Entry</button>
+          </div>
+          <div id="suiteEntries"></div>
+
+          <div class="section-head">
+            <h3>Common Area</h3>
+            <button class="btn-primary" id="addCommonBtn" type="button">+ Add Common Area Entry</button>
+          </div>
+          <div id="commonEntries"></div>
+
+          <div class="toolbar">
+            <button class="btn-soft" id="saveBtn" type="button">Save on This Device</button>
+            <button class="btn-soft" id="clearBtn" type="button">Clear Form</button>
+            <button class="btn-green" id="copyBtn" type="button">Copy Report</button>
+            <button class="btn-orange" id="whatsappBtn" type="button">Send to WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h2>Report Preview</h2>
+          <div class="sub">This text will be sent or copied.</div>
+          <div id="reportPreview" class="report-box"></div>
+          <div class="mini">WhatsApp destination: +977 9808121644</div>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <h2>Quick Description Helpers</h2>
+          <div class="sub">Tap one to add a useful phrase into the last selected description box.</div>
+          <div class="chip-row" id="helperChips"></div>
+        </div>
+
+        <div class="footer-note">Karma Tara Residency · Employee Daily Report App</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const suites = [
+      "Everest Suite","Kanchejunga Suite","Lhotse Suite","Makalu Plus",
+      "Cho Oyu Suite","Dhaulagiri Suite","Manaslu Plus","Annapurna Suite","AmaDablam Suite"
+    ];
+
+    const commonAreas = [
+      "Laundry Sent/Received","Staircase","Kitchen","Parking Area",
+      "Generator Area","Water Reserved Main","Water Supply","Solar Panel"
+    ];
+
+    const defaultStaff = ["Sonam","Amar","Kul Bdr.","Raman"];
+    const workloadOptions = ["Cleaned","Checked","Guest Service","Laundry","Maintenance","Inspection","Refill","Other"];
+
+    const helperTexts = [
+      "Room cleaned and checked properly.",
+      "Guest request handled successfully.",
+      "Laundry sent and received on time.",
+      "Area cleaned and organized.",
+      "Supplies checked and refilled.",
+      "Maintenance issue noted and followed up.",
+      "Final inspection completed.",
+      "No issue noticed during check."
+    ];
+
+    const appStateKey = "ktr_employee_daily_report_v1";
+    let lastFocusedTextarea = null;
+
+    const reportDate = document.getElementById("reportDate");
+    const staffName = document.getElementById("staffName");
+    const newStaffName = document.getElementById("newStaffName");
+    const suiteEntries = document.getElementById("suiteEntries");
+    const commonEntries = document.getElementById("commonEntries");
+    const reportPreview = document.getElementById("reportPreview");
+    const helperChips = document.getElementById("helperChips");
+
+    function todayLocalDate(){
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
+      const local = new Date(now.getTime() - offset*60000);
+      return local.toISOString().slice(0,10);
+    }
+
+    function loadState(){
+      try{
+        return JSON.parse(localStorage.getItem(appStateKey)) || null;
+      }catch(e){
+        return null;
+      }
+    }
+
+    function saveState(){
+      const state = {
+        date: reportDate.value,
+        staffList: getStaffList(),
+        staffSelected: staffName.value,
+        suites: collectEntries("suite"),
+        commons: collectEntries("common")
+      };
+      localStorage.setItem(appStateKey, JSON.stringify(state));
+      renderReport();
+    }
+
+    function getStaffList(){
+      return Array.from(staffName.options).map(o => o.value).filter(Boolean);
+    }
+
+    function populateStaff(list, selectedValue){
+      staffName.innerHTML = "";
+      list.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        staffName.appendChild(option);
+      });
+      if(selectedValue && list.includes(selectedValue)) staffName.value = selectedValue;
+    }
+
+    function createField(labelText, inputEl){
+      const wrap = document.createElement("div");
+      wrap.className = "field";
+      const label = document.createElement("label");
+      label.textContent = labelText;
+      wrap.appendChild(label);
+      wrap.appendChild(inputEl);
+      return wrap;
+    }
+
+    function createEntry(type, value = {}){
+      const container = document.createElement("div");
+      container.className = "entry";
+      container.dataset.type = type;
+
+      const top = document.createElement("div");
+      top.className = "entry-top";
+
+      const tag = document.createElement("div");
+      tag.className = "pill";
+      tag.textContent = type === "suite" ? "Suite Entry" : "Common Area Entry";
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-btn";
+      removeBtn.textContent = "Remove";
+      removeBtn.addEventListener("click", () => {
+        container.remove();
+        ensureMinimumEntries();
+        saveState();
+      });
+
+      top.appendChild(tag);
+      top.appendChild(removeBtn);
+
+      const placeSelect = document.createElement("select");
+      (type === "suite" ? suites : commonAreas).forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.textContent = item;
+        placeSelect.appendChild(opt);
+      });
+      placeSelect.value = value.place || (type === "suite" ? suites[0] : commonAreas[0]);
+
+      const workloadSelect = document.createElement("select");
+      workloadOptions.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.textContent = item;
+        workloadSelect.appendChild(opt);
+      });
+      workloadSelect.value = value.workload || workloadOptions[0];
+
+      const desc = document.createElement("textarea");
+      desc.placeholder = "Be specific on all the work done";
+      desc.value = value.description || "";
+      desc.addEventListener("focus", () => lastFocusedTextarea = desc);
+
+      [placeSelect, workloadSelect, desc].forEach(el => {
+        el.addEventListener("input", saveState);
+        el.addEventListener("change", saveState);
+      });
+
+      const row = document.createElement("div");
+      row.className = "row";
+      row.appendChild(createField(type === "suite" ? "Suite Room" : "Common Area", placeSelect));
+      row.appendChild(createField("Work Load", workloadSelect));
+
+      container.appendChild(top);
+      container.appendChild(row);
+      container.appendChild(createField("Description", desc));
+
+      return container;
+    }
+
+    function addEntry(type, value){
+      const entry = createEntry(type, value);
+      if(type === "suite") suiteEntries.appendChild(entry);
+      else commonEntries.appendChild(entry);
+      saveState();
+    }
+
+    function collectEntries(type){
+      const host = type === "suite" ? suiteEntries : commonEntries;
+      return Array.from(host.querySelectorAll(".entry")).map(entry => {
+        const els = entry.querySelectorAll("select, textarea");
+        return {
+          place: els[0].value,
+          workload: els[1].value,
+          description: els[2].value.trim()
+        };
+      }).filter(item => item.place || item.workload || item.description);
+    }
+
+    function ensureMinimumEntries(){
+      if(!suiteEntries.children.length) suiteEntries.appendChild(createEntry("suite"));
+      if(!commonEntries.children.length) commonEntries.appendChild(createEntry("common"));
+      renderReport();
+    }
+
+    function buildReportText(){
+      const dateText = reportDate.value || todayLocalDate();
+      const nameText = staffName.value || "";
+      const suitesData = collectEntries("suite").filter(x => x.description || x.place || x.workload);
+      const commonsData = collectEntries("common").filter(x => x.description || x.place || x.workload);
+
+      const lines = [];
+      lines.push("Karma Tara Residency");
+      lines.push("Employee Daily Report");
+      lines.push("");
+      lines.push("Date: " + dateText);
+      lines.push("Name: " + nameText);
+      lines.push("");
+
+      if(suitesData.length){
+        lines.push("Suite Room:");
+        suitesData.forEach((item, idx) => {
+          lines.push((idx+1) + ". " + item.place + " - " + item.workload);
+          lines.push("   " + (item.description || "-"));
+        });
+        lines.push("");
+      }
+
+      if(commonsData.length){
+        lines.push("Common Area:");
+        commonsData.forEach((item, idx) => {
+          lines.push((idx+1) + ". " + item.place + " - " + item.workload);
+          lines.push("   " + (item.description || "-"));
+        });
+      }
+
+      return lines.join("\n").trim();
+    }
+
+    function renderReport(){
+      reportPreview.textContent = buildReportText();
+    }
+
+    function addHelperChips(){
+      helperChips.innerHTML = "";
+      helperTexts.forEach(text => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip";
+        chip.textContent = text;
+        chip.addEventListener("click", () => {
+          if(!lastFocusedTextarea){
+            const first = document.querySelector("textarea");
+            if(first) lastFocusedTextarea = first;
+          }
+          if(lastFocusedTextarea){
+            lastFocusedTextarea.value = lastFocusedTextarea.value
+              ? (lastFocusedTextarea.value.trim() + " " + text)
+              : text;
+            lastFocusedTextarea.dispatchEvent(new Event("input"));
+            lastFocusedTextarea.focus();
+          }
+        });
+        helperChips.appendChild(chip);
+      });
+    }
+
+    function resetForm(){
+      reportDate.value = todayLocalDate();
+      populateStaff(defaultStaff, defaultStaff[0]);
+      suiteEntries.innerHTML = "";
+      commonEntries.innerHTML = "";
+      suiteEntries.appendChild(createEntry("suite"));
+      commonEntries.appendChild(createEntry("common"));
+      saveState();
+    }
+
+    document.getElementById("addSuiteBtn").addEventListener("click", () => addEntry("suite"));
+    document.getElementById("addCommonBtn").addEventListener("click", () => addEntry("common"));
+
+    document.getElementById("addStaffBtn").addEventListener("click", () => {
+      const name = newStaffName.value.trim();
+      if(!name) return;
+      const current = getStaffList();
+      if(!current.includes(name)){
+        current.push(name);
+        populateStaff(current, name);
+        newStaffName.value = "";
+        saveState();
+      } else {
+        staffName.value = name;
+        newStaffName.value = "";
+        saveState();
+      }
+    });
+
+    [reportDate, staffName].forEach(el => {
+      el.addEventListener("input", saveState);
+      el.addEventListener("change", saveState);
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", () => {
+      saveState();
+      alert("Saved on this device.");
+    });
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      if(confirm("Clear the current form?")){
+        localStorage.removeItem(appStateKey);
+        resetForm();
+      }
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      const text = buildReportText();
+      try{
+        await navigator.clipboard.writeText(text);
+        alert("Report copied.");
+      }catch(e){
+        alert("Copy did not work on this device. Please copy from the preview box.");
+      }
+    });
+
+    document.getElementById("whatsappBtn").addEventListener("click", () => {
+      const text = encodeURIComponent(buildReportText());
+      const phone = "9779808121644";
+      const url = `https://wa.me/${phone}?text=${text}`;
+      window.open(url, "_blank");
+    });
+
+    function init(){
+      addHelperChips();
+      const saved = loadState();
+      if(saved){
+        reportDate.value = saved.date || todayLocalDate();
+        populateStaff(saved.staffList && saved.staffList.length ? saved.staffList : defaultStaff, saved.staffSelected || defaultStaff[0]);
+        suiteEntries.innerHTML = "";
+        commonEntries.innerHTML = "";
+        (saved.suites && saved.suites.length ? saved.suites : [{}]).forEach(item => suiteEntries.appendChild(createEntry("suite", item)));
+        (saved.commons && saved.commons.length ? saved.commons : [{}]).forEach(item => commonEntries.appendChild(createEntry("common", item)));
+        ensureMinimumEntries();
+        renderReport();
+      } else {
+        reportDate.value = todayLocalDate();
+        populateStaff(defaultStaff, defaultStaff[0]);
+        suiteEntries.appendChild(createEntry("suite"));
+        commonEntries.appendChild(createEntry("common"));
+        renderReport();
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
