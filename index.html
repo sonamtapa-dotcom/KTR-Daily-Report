@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Karma Tara Residency - Employee Daily Report v4</title>
+  <title>Karma Tara Residency - Employee Daily Report</title>
   <style>
     :root {
       --bg: #f6f4ef;
@@ -43,17 +43,12 @@
       border-radius: 24px;
       box-shadow: var(--shadow);
       margin-bottom: 16px;
+      text-align: center;
     }
 
     .header h1 {
-      margin: 0 0 4px;
-      font-size: 1.45rem;
-    }
-
-    .header p {
       margin: 0;
-      opacity: .92;
-      font-size: .95rem;
+      font-size: 1.45rem;
     }
 
     .grid {
@@ -122,7 +117,6 @@
 
     .btn-primary { background: var(--brand); color: #fff; }
     .btn-secondary { background: #eef2f7; color: var(--text); }
-    .btn-accent { background: var(--accent); color: #fff; }
     .btn-whatsapp { background: #25D366; color: #fff; }
     .btn-danger { background: #fbe4e4; color: #8b1e1e; }
 
@@ -228,7 +222,6 @@
   <div class="wrap">
     <div class="header">
       <h1>Karma Tara Residency - Employee Daily Report</h1>
-      <p>Version 4 · mobile-first · staff login · analytics · auto WhatsApp report</p>
     </div>
 
     <div class="grid two">
@@ -250,11 +243,6 @@
                 <input id="newStaffInput" type="text" placeholder="Enter staff name" />
                 <button class="btn-primary" id="saveStaffBtn" type="button">Save Staff</button>
               </div>
-            </div>
-            <div>
-              <label for="whatsappNumber">WhatsApp Number</label>
-              <input id="whatsappNumber" type="text" placeholder="e.g. 9779808121644" value="9779808121644" />
-              <div class="muted tiny">Report opens directly in WhatsApp. Use country code without + sign.</div>
             </div>
           </div>
         </div>
@@ -345,7 +333,7 @@
         <div class="card">
           <h2>Daily Report</h2>
           <div class="stack">
-            <button class="btn-whatsapp" id="whatsappBtn" type="button">Open WhatsApp Report</button>
+            <button class="btn-whatsapp" id="whatsappBtn" type="button">Send Report</button>
             <button class="btn-secondary" id="copyBtn" type="button">Copy Report Text</button>
             <button class="btn-danger" id="resetBtn" type="button">Reset Today</button>
             <label for="preview">Report Preview</label>
@@ -360,6 +348,7 @@
 
   <script>
     const STORAGE_KEY = 'ktr-daily-report-v4';
+    const FIXED_WHATSAPP_NUMBER = '9779808121644';
     const defaultStaff = ['Sonam', 'Amar', 'Kul Bdr.', 'Raman'];
     const suiteRooms = ['Everest', 'Kanchenjunga', 'Lhotse', 'Makalu', 'Cho Oyu', 'Dhaulagiri', 'Manaslu', 'Annapurna', 'Ama Dablam'];
     const commonAreas = ['Lobby', 'Reception', 'Stairway', 'Terrace', 'Kitchen', 'Dining Area', 'Parking', 'Garden', 'Laundry Area'];
@@ -385,7 +374,6 @@
           staffList: Array.isArray(parsed.staffList) && parsed.staffList.length ? parsed.staffList : [...defaultStaff],
           selectedStaff: parsed.selectedStaff || 'Sonam',
           reportDate: parsed.reportDate || todayLocalISO(),
-          whatsappNumber: parsed.whatsappNumber || '9779808121644',
           suiteEntries: Array.isArray(parsed.suiteEntries) ? parsed.suiteEntries : [],
           commonEntries: Array.isArray(parsed.commonEntries) ? parsed.commonEntries : []
         };
@@ -394,7 +382,6 @@
           staffList: [...defaultStaff],
           selectedStaff: 'Sonam',
           reportDate: todayLocalISO(),
-          whatsappNumber: '9779808121644',
           suiteEntries: [],
           commonEntries: []
         };
@@ -433,7 +420,6 @@
 
     function renderAll() {
       $('reportDate').value = state.reportDate;
-      $('whatsappNumber').value = state.whatsappNumber;
 
       fillSelect($('staffSelect'), state.staffList, true);
       $('staffSelect').value = state.selectedStaff;
@@ -514,12 +500,9 @@
       $('preview').value = makeReportText();
     }
 
-    function openWhatsApp() {
+    function sendReport() {
       const text = makeReportText();
-      const number = (state.whatsappNumber || '').replace(/\D/g, '');
-      const url = number
-        ? `https://wa.me/${number}?text=${encodeURIComponent(text)}`
-        : `https://wa.me/?text=${encodeURIComponent(text)}`;
+      const url = `https://wa.me/${FIXED_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
       window.open(url, '_blank');
     }
 
@@ -631,11 +614,6 @@
         renderAll();
       });
 
-      $('whatsappNumber').addEventListener('input', (e) => {
-        state.whatsappNumber = e.target.value;
-        saveState();
-      });
-
       $('addSuiteBtn').addEventListener('click', () => {
         show($('suiteForm'));
         $('suiteRoom').focus();
@@ -655,7 +633,7 @@
       bindTapButtons('suiteStatusButtons', (value) => suiteSelectedStatus = value);
       bindTapButtons('commonStatusButtons', (value) => commonSelectedStatus = value);
 
-      $('whatsappBtn').addEventListener('click', openWhatsApp);
+      $('whatsappBtn').addEventListener('click', sendReport);
       $('copyBtn').addEventListener('click', copyReport);
       $('resetBtn').addEventListener('click', resetToday);
     }
