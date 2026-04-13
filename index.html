@@ -2,643 +2,981 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Karma Tara Residency - Employee Daily Report</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Karma Tara Residency - Daily Report V5.2</title>
   <style>
     :root {
-      --bg: #f6f4ef;
+      --bg: #f6f3ec;
       --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --brand: #234b36;
-      --brand-2: #2f6f4f;
-      --accent: #b88b4a;
-      --good: #1f7a4d;
-      --warn: #c07a00;
-      --bad: #b23a3a;
-      --shadow: 0 10px 25px rgba(0,0,0,.07);
-      --radius: 18px;
+      --ink: #18332a;
+      --muted: #6a746f;
+      --line: #e3ddd2;
+      --brand: #1f5a3d;
+      --brand-2: #2f7a54;
+      --soft: #edf5ef;
+      --warn: #c87a15;
+      --warn-bg: #fff6e7;
+      --danger: #b44436;
+      --danger-bg: #fff0ee;
+      --ok: #2a6b45;
+      --ok-bg: #edf8f0;
+      --shadow: 0 10px 30px rgba(21, 33, 28, 0.08);
+      --radius: 22px;
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
       background: var(--bg);
-      color: var(--text);
-      line-height: 1.4;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .wrap {
-      max-width: 980px;
+    .app {
+      max-width: 920px;
       margin: 0 auto;
-      padding: 16px;
-    }
-
-    .header {
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      color: white;
-      padding: 18px;
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 1.45rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    @media (min-width: 900px) {
-      .grid.two {
-        grid-template-columns: 1.15fr .85fr;
-      }
+      padding: 16px 14px 36px;
     }
 
     .card {
       background: var(--card);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(0,0,0,0.04);
       border-radius: var(--radius);
-      padding: 16px;
       box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 14px;
     }
 
-    .card h2 {
-      margin: 0 0 12px;
-      font-size: 1.05rem;
+    .center-card {
+      max-width: 560px;
+      margin: 20px auto;
+      padding: 24px 18px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 30px; line-height: 1.1; }
+    h2 { font-size: 22px; margin-bottom: 10px; }
+    h3 { font-size: 18px; margin-bottom: 10px; }
+    .sub { color: var(--muted); margin-top: 8px; }
+    .tiny { font-size: 13px; color: var(--muted); }
+    .admin-badge,
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
+      display: grid;
+      gap: 12px;
     }
-
-    .stack { display: grid; gap: 10px; }
+    .row.two { grid-template-columns: 1fr 1fr; }
+    .row.three { grid-template-columns: repeat(3, 1fr); }
 
     label {
-      font-size: .92rem;
-      color: var(--muted);
       display: block;
-      margin-bottom: 5px;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     input, select, textarea {
       width: 100%;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid #d1d5db;
-      font-size: 1rem;
+      border: 2px solid var(--line);
       background: #fff;
+      border-radius: 18px;
+      padding: 14px 14px;
+      font-size: 17px;
+      color: var(--ink);
+      outline: none;
     }
 
-    textarea { min-height: 84px; resize: vertical; }
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
 
-    button {
-      border: 0;
-      border-radius: 14px;
-      padding: 13px 16px;
-      font-size: 1rem;
-      font-weight: 700;
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--brand-2);
+      box-shadow: 0 0 0 4px rgba(47, 122, 84, 0.10);
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      border-radius: 18px;
+      padding: 15px 16px;
       cursor: pointer;
-      transition: transform .04s ease, opacity .15s ease;
+      transition: transform 0.05s ease, opacity 0.2s ease;
+    }
+    .btn:active { transform: scale(0.99); }
+    .btn.secondary {
+      background: #eef3ef;
+      color: var(--brand);
+    }
+    .btn.warn {
+      background: var(--warn);
+      color: white;
+    }
+    .btn.danger {
+      background: var(--danger);
+      color: white;
+    }
+    .btn.ghost {
+      background: transparent;
+      border: 2px solid var(--line);
+      color: var(--ink);
     }
 
-    button:active { transform: scale(.985); }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
 
-    .btn-primary { background: var(--brand); color: #fff; }
-    .btn-secondary { background: #eef2f7; color: var(--text); }
-    .btn-whatsapp { background: #25D366; color: #fff; }
-    .btn-danger { background: #fbe4e4; color: #8b1e1e; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .metric {
+      background: #fafaf8;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .metric .value {
+      font-size: 30px;
+      font-weight: 800;
+      margin-top: 6px;
+    }
 
-    .tap-buttons {
+    .section-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .tab {
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 12px;
+      font-size: 17px;
+      font-weight: 800;
+      background: white;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .tab.active {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+    }
+
+    .grid-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .select-wrap {
+      margin-top: 12px;
+    }
+    .big-button {
+      border: 2px solid var(--line);
+      background: white;
+      border-radius: 18px;
+      padding: 16px 12px;
+      min-height: 68px;
+      text-align: left;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .big-button.active {
+      border-color: var(--brand);
+      background: var(--soft);
+    }
+
+    .status-group {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 10px;
+      margin-top: 10px;
     }
-
-    .tap {
-      background: #f4f7f5;
-      color: var(--text);
-      border: 2px solid #d8e3dc;
-      min-height: 52px;
+    .status-btn {
+      border: 2px solid var(--line);
+      background: white;
+      border-radius: 16px;
+      padding: 14px 10px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
     }
-
-    .tap.active { border-color: var(--brand); background: #e7f1eb; }
-    .tap.cleaned.active { border-color: var(--good); background: #e9f7f0; color: var(--good); }
-    .tap.pending.active { border-color: var(--warn); background: #fff6e6; color: var(--warn); }
-    .tap.attention.active { border-color: var(--bad); background: #fdecec; color: var(--bad); }
+    .status-btn.active[data-status="Cleaned"] {
+      background: var(--ok-bg);
+      border-color: var(--ok);
+      color: var(--ok);
+    }
+    .status-btn.active[data-status="Pending"] {
+      background: var(--warn-bg);
+      border-color: var(--warn);
+      color: var(--warn);
+    }
+    .status-btn.active[data-status="Issue"] {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
 
     .entry-list {
       display: grid;
       gap: 10px;
       margin-top: 12px;
     }
-
     .entry {
       border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .entry-top {
+      background: #fcfcfb;
+      border-radius: 18px;
+      padding: 14px;
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
       align-items: flex-start;
-      margin-bottom: 8px;
     }
-
-    .pill {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: .82rem;
-      font-weight: 700;
-    }
-
-    .pill.cleaned { background: #e9f7f0; color: var(--good); }
-    .pill.pending { background: #fff6e6; color: var(--warn); }
-    .pill.attention { background: #fdecec; color: var(--bad); }
-
-    .muted { color: var(--muted); font-size: .92rem; }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    @media (min-width: 680px) {
-      .stats { grid-template-columns: repeat(4, 1fr); }
-    }
-
-    .stat {
-      background: #fafafa;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.4rem;
-      color: var(--brand);
+    .entry-title {
+      font-size: 17px;
+      font-weight: 800;
       margin-bottom: 4px;
     }
+    .status-tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .status-Cleaned { background: var(--ok-bg); color: var(--ok); }
+    .status-Pending { background: var(--warn-bg); color: var(--warn); }
+    .status-Issue { background: var(--danger-bg); color: var(--danger); }
 
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .hidden { display: none !important; }
+
+    .report-box {
+      background: #fbfbf9;
+      border: 1px dashed #cfc6b6;
+      border-radius: 18px;
+      padding: 16px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 10px;
     }
 
-    .hidden { display: none; }
-
-    .footer-note {
-      text-align: center;
+    .note {
+      margin-top: 10px;
       color: var(--muted);
-      font-size: .85rem;
-      margin: 18px 0 6px;
+      font-size: 13px;
+      line-height: 1.4;
     }
 
-    .tiny { font-size: .82rem; }
+    .error {
+      margin-top: 10px;
+      color: var(--danger);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .success {
+      margin-top: 10px;
+      color: var(--ok);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .admin-panel {
+      background: #fbfbf8;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 14px 0;
+    }
+
+    @media (max-width: 700px) {
+      .app { padding: 12px 10px 28px; }
+      .row.two, .row.three, .metrics, .actions { grid-template-columns: 1fr; }
+      .grid-buttons { grid-template-columns: 1fr 1fr; }
+      h1 { font-size: 26px; }
+      .center-card { margin-top: 10px; }
+    }
+
+    @media (max-width: 440px) {
+      .grid-buttons, .status-group, .section-tabs { grid-template-columns: 1fr; }
+      .entry { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <h1>Karma Tara Residency - Employee Daily Report</h1>
-    </div>
-
-    <div class="grid two">
-      <div class="stack">
-        <div class="card">
-          <h2>Staff Login & Daily Setup</h2>
-          <div class="stack">
-            <div>
-              <label for="reportDate">Report Date</label>
-              <input type="date" id="reportDate" />
-            </div>
-            <div>
-              <label for="staffSelect">Staff Name</label>
-              <select id="staffSelect"></select>
-            </div>
-            <div id="newStaffWrap" class="hidden">
-              <label for="newStaffInput">Add New Staff</label>
-              <div class="row">
-                <input id="newStaffInput" type="text" placeholder="Enter staff name" />
-                <button class="btn-primary" id="saveStaffBtn" type="button">Save Staff</button>
-              </div>
-            </div>
-          </div>
+  <div class="app">
+    <section id="loginScreen" class="card center-card">
+      <h1>Daily Report Login</h1>
+      <p class="sub">Simple staff login for report tracking</p>
+      <div style="height:16px"></div>
+      <div class="row">
+        <div>
+          <label for="staffSelect">Staff Name</label>
+          <select id="staffSelect"></select>
         </div>
-
-        <div class="card">
-          <div class="section-title">
-            <h2>Suite Room</h2>
-            <button class="btn-primary" id="addSuiteBtn" type="button">+ Add Suite Entry</button>
-          </div>
-
-          <div id="suiteForm" class="entry hidden">
-            <div class="stack">
-              <div>
-                <label for="suiteRoom">Suite Name</label>
-                <select id="suiteRoom"></select>
-              </div>
-              <div>
-                <label>Status</label>
-                <div class="tap-buttons" id="suiteStatusButtons">
-                  <button type="button" class="tap cleaned" data-value="Cleaned">Cleaned</button>
-                  <button type="button" class="tap pending" data-value="Pending">Pending</button>
-                  <button type="button" class="tap attention" data-value="Needs Attention">Needs Attention</button>
-                </div>
-              </div>
-              <div>
-                <label for="suiteNote">Note</label>
-                <textarea id="suiteNote" placeholder="Optional note"></textarea>
-              </div>
-              <div class="row">
-                <button class="btn-primary" id="saveSuiteBtn" type="button">Save Suite Entry</button>
-                <button class="btn-secondary" id="cancelSuiteBtn" type="button">Cancel</button>
-              </div>
-            </div>
-          </div>
-
-          <div id="suiteEntries" class="entry-list"></div>
+        <div>
+          <label for="pinInput">4-digit PIN</label>
+          <input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="Enter PIN" />
         </div>
+        <button id="loginBtn" class="btn">Login</button>
+        <div id="loginError" class="error hidden">Invalid staff name or PIN.</div>
+      </div>
+    </section>
 
-        <div class="card">
-          <div class="section-title">
-            <h2>Common Area</h2>
-            <button class="btn-primary" id="addCommonBtn" type="button">+ Add Common Area Entry</button>
-          </div>
-
-          <div id="commonForm" class="entry hidden">
-            <div class="stack">
-              <div>
-                <label for="commonArea">Area Name</label>
-                <select id="commonArea"></select>
-              </div>
-              <div>
-                <label>Status</label>
-                <div class="tap-buttons" id="commonStatusButtons">
-                  <button type="button" class="tap cleaned" data-value="Cleaned">Cleaned</button>
-                  <button type="button" class="tap pending" data-value="Pending">Pending</button>
-                  <button type="button" class="tap attention" data-value="Needs Attention">Needs Attention</button>
-                </div>
-              </div>
-              <div>
-                <label for="commonNote">Note</label>
-                <textarea id="commonNote" placeholder="Optional note"></textarea>
-              </div>
-              <div class="row">
-                <button class="btn-primary" id="saveCommonBtn" type="button">Save Common Area Entry</button>
-                <button class="btn-secondary" id="cancelCommonBtn" type="button">Cancel</button>
-              </div>
-            </div>
-          </div>
-
-          <div id="commonEntries" class="entry-list"></div>
+    <section id="mainApp" class="hidden">
+      <div class="topbar card">
+        <div>
+          <h1>Karma Tara Residency</h1>
+          <p class="sub">Employee Daily Report · Version 5.2</p>
+          <div style="height:10px"></div>
+          <div class="pill" id="todayDate"></div>
+        </div>
+        <div>
+          <div class="admin-badge" id="userBadge"></div>
+          <div style="height:10px"></div>
+          <button id="logoutBtn" class="btn secondary" style="min-width:140px; width:auto; padding:12px 16px;">Logout</button>
         </div>
       </div>
 
-      <div class="stack">
-        <div class="card">
-          <h2>Simple Analytics Dashboard</h2>
-          <div class="stats">
-            <div class="stat"><strong id="statStaff">-</strong><span>Staff</span></div>
-            <div class="stat"><strong id="statSuite">0</strong><span>Suite Entries</span></div>
-            <div class="stat"><strong id="statCommon">0</strong><span>Common Entries</span></div>
-            <div class="stat"><strong id="statCleaned">0</strong><span>Total Cleaned</span></div>
+      <div class="card">
+        <h2>Today Dashboard</h2>
+        <div class="metrics">
+          <div class="metric">
+            <div class="tiny">Total Entries</div>
+            <div class="value" id="metricEntries">0</div>
           </div>
-          <div style="margin-top:12px" class="stack muted">
-            <div id="summaryText">No entries yet for today.</div>
+          <div class="metric">
+            <div class="tiny">Cleaned</div>
+            <div class="value" id="metricCleaned">0</div>
           </div>
-        </div>
-
-        <div class="card">
-          <h2>Daily Report</h2>
-          <div class="stack">
-            <button class="btn-whatsapp" id="whatsappBtn" type="button">Send Report</button>
-            <button class="btn-secondary" id="copyBtn" type="button">Copy Report Text</button>
-            <button class="btn-danger" id="resetBtn" type="button">Reset Today</button>
-            <label for="preview">Report Preview</label>
-            <textarea id="preview" readonly></textarea>
+          <div class="metric">
+            <div class="tiny">Pending</div>
+            <div class="value" id="metricPending">0</div>
+          </div>
+          <div class="metric">
+            <div class="tiny">Issues</div>
+            <div class="value" id="metricIssues">0</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="footer-note">Sonam T. Gurung - 2026</div>
+      <div id="adminCard" class="card hidden">
+        <h2>Admin Tools</h2>
+        <p class="sub">Only visible when Sonam logs in as Admin.</p>
+        <div style="height:12px"></div>
+        <div class="admin-panel">
+          <h3>Add Staff</h3>
+          <div class="row two">
+            <div>
+              <label for="newStaffName">Staff Name</label>
+              <input id="newStaffName" type="text" placeholder="Enter staff name" />
+            </div>
+            <div>
+              <label for="newStaffPin">4-digit PIN</label>
+              <input id="newStaffPin" type="password" inputmode="numeric" maxlength="4" placeholder="Enter PIN" />
+            </div>
+          </div>
+          <div style="height:10px"></div>
+          <button id="addStaffBtn" class="btn">+ Add Staff</button>
+
+          <div class="divider"></div>
+
+          <h3>Change Staff PIN</h3>
+          <div class="row two">
+            <div>
+              <label for="pinStaffSelect">Select Staff</label>
+              <select id="pinStaffSelect"></select>
+            </div>
+            <div>
+              <label for="updatedPin">New 4-digit PIN</label>
+              <input id="updatedPin" type="password" inputmode="numeric" maxlength="4" placeholder="New PIN" />
+            </div>
+          </div>
+          <div style="height:10px"></div>
+          <button id="updatePinBtn" class="btn secondary">Update PIN</button>
+
+          <div class="divider"></div>
+
+          <h3>Current Staff List</h3>
+          <div id="staffListBox" class="report-box"></div>
+          <div id="adminMessage" class="success hidden"></div>
+          <div id="adminError" class="error hidden"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Add Work Entry</h2>
+        <div class="section-tabs">
+          <button class="tab active" data-section="Suite Room">Suite Room</button>
+          <button class="tab" data-section="Common Area">Common Area</button>
+        </div>
+
+        <div id="suiteDropdown" class="select-wrap">
+          <label for="suiteSelect">Suite Name</label>
+          <select id="suiteSelect">
+            <option value="">Select suite room</option>
+          </select>
+        </div>
+        <div id="commonDropdown" class="select-wrap hidden">
+          <label for="commonSelect">Area Name</label>
+          <select id="commonSelect">
+            <option value="">Select common area</option>
+          </select>
+        </div>
+
+        <div style="height:14px"></div>
+        <div class="row two">
+          <div>
+            <label>Selected Area</label>
+            <input id="selectedArea" type="text" placeholder="Tap a room/area button above" readonly />
+          </div>
+          <div>
+            <label>Status</label>
+            <div class="status-group">
+              <button class="status-btn active" data-status="Cleaned">Cleaned</button>
+              <button class="status-btn" data-status="Pending">Pending</button>
+              <button class="status-btn" data-status="Issue">Issue</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+        <div>
+          <label for="entryNote">Note</label>
+          <textarea id="entryNote" placeholder="Optional note"></textarea>
+        </div>
+        <div style="height:12px"></div>
+        <button id="addEntryBtn" class="btn">+ Add Entry</button>
+      </div>
+
+      <div class="card">
+        <h2>Today Entries</h2>
+        <div id="entryList" class="entry-list"></div>
+        <p id="emptyState" class="sub">No entries yet for today.</p>
+      </div>
+
+      <div class="card">
+        <h2>Daily Summary Report</h2>
+        <div id="reportBox" class="report-box"></div>
+        <div style="height:12px"></div>
+        <div class="actions">
+          <button id="copyReportBtn" class="btn secondary">Copy Report</button>
+          <button id="downloadReportBtn" class="btn ghost">Download TXT</button>
+          <button id="whatsappBtn" class="btn">Send to WhatsApp</button>
+        </div>
+        <div style="height:10px"></div>
+        <button id="clearTodayBtn" class="btn warn">Clear Today Data</button>
+        <p class="note">Important: this version works offline and stores data locally on each phone. Different staff can use different phones at the same time, but reports do not sync live yet.</p>
+      </div>
+    </section>
   </div>
 
   <script>
-    const STORAGE_KEY = 'ktr-daily-report-v4';
-    const FIXED_WHATSAPP_NUMBER = '9779808121644';
-    const defaultStaff = ['Sonam', 'Amar', 'Kul Bdr.', 'Raman'];
-    const suiteRooms = ['Everest', 'Kanchenjunga', 'Lhotse', 'Makalu', 'Cho Oyu', 'Dhaulagiri', 'Manaslu', 'Annapurna', 'Ama Dablam'];
-    const commonAreas = ['Lobby', 'Reception', 'Stairway', 'Terrace', 'Kitchen', 'Dining Area', 'Parking', 'Garden', 'Laundry Area'];
+    const APP_KEY = 'ktr_daily_report_v5_1';
+    const SESSION_KEY = 'ktr_daily_report_v5_1_session';
+    const WHATSAPP_NUMBER = '9779808121644';
 
-    const $ = (id) => document.getElementById(id);
+    const defaultStaffMembers = [
+      { name: 'Sonam', pin: '9999', role: 'Admin' },
+      { name: 'Amar', pin: '1111', role: 'Staff' },
+      { name: 'Kul Bdr.', pin: '2222', role: 'Staff' },
+      { name: 'Raman', pin: '3333', role: 'Staff' }
+    ];
 
-    const state = loadState();
-    let suiteSelectedStatus = '';
-    let commonSelectedStatus = '';
+    const suiteRooms = [
+      'Everest', 'Kanchenjunga', 'Lhotse', 'Makalu', 'Cho Oyu',
+      'Dhaulagiri', 'Manaslu', 'Annapurna', 'Ama Dablam'
+    ];
 
-    function todayLocalISO() {
-      const now = new Date();
-      const off = now.getTimezoneOffset();
-      const local = new Date(now.getTime() - off * 60000);
-      return local.toISOString().slice(0, 10);
+    const commonAreas = [
+      'Lobby', 'Reception', 'Kitchen', 'Dining', 'Rooftop Terrace',
+      'Stairway', 'Garden', 'Parking', 'Laundry', 'Solar Panel',
+      'Generator', 'Jar Water', 'Main Water Reserved', 'Top Water Tank'
+    ];
+
+    const els = {
+      loginScreen: document.getElementById('loginScreen'),
+      mainApp: document.getElementById('mainApp'),
+      staffSelect: document.getElementById('staffSelect'),
+      pinInput: document.getElementById('pinInput'),
+      loginBtn: document.getElementById('loginBtn'),
+      loginError: document.getElementById('loginError'),
+      logoutBtn: document.getElementById('logoutBtn'),
+      userBadge: document.getElementById('userBadge'),
+      todayDate: document.getElementById('todayDate'),
+      suiteDropdown: document.getElementById('suiteDropdown'),
+      commonDropdown: document.getElementById('commonDropdown'),
+      suiteSelect: document.getElementById('suiteSelect'),
+      commonSelect: document.getElementById('commonSelect'),
+      selectedArea: document.getElementById('selectedArea'),
+      entryNote: document.getElementById('entryNote'),
+      addEntryBtn: document.getElementById('addEntryBtn'),
+      entryList: document.getElementById('entryList'),
+      emptyState: document.getElementById('emptyState'),
+      metricEntries: document.getElementById('metricEntries'),
+      metricCleaned: document.getElementById('metricCleaned'),
+      metricPending: document.getElementById('metricPending'),
+      metricIssues: document.getElementById('metricIssues'),
+      reportBox: document.getElementById('reportBox'),
+      copyReportBtn: document.getElementById('copyReportBtn'),
+      downloadReportBtn: document.getElementById('downloadReportBtn'),
+      whatsappBtn: document.getElementById('whatsappBtn'),
+      clearTodayBtn: document.getElementById('clearTodayBtn'),
+      adminCard: document.getElementById('adminCard'),
+      newStaffName: document.getElementById('newStaffName'),
+      newStaffPin: document.getElementById('newStaffPin'),
+      addStaffBtn: document.getElementById('addStaffBtn'),
+      pinStaffSelect: document.getElementById('pinStaffSelect'),
+      updatedPin: document.getElementById('updatedPin'),
+      updatePinBtn: document.getElementById('updatePinBtn'),
+      staffListBox: document.getElementById('staffListBox'),
+      adminMessage: document.getElementById('adminMessage'),
+      adminError: document.getElementById('adminError')
+    };
+
+    let state = loadState();
+    let session = loadSession();
+    let currentSection = 'Suite Room';
+    let currentStatus = 'Cleaned';
+    let selectedArea = '';
+
+    function todayKey() {
+      const d = new Date();
+      return d.toISOString().slice(0, 10);
+    }
+
+    function timeStamp() {
+      const d = new Date();
+      return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function niceDate() {
+      const d = new Date();
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     function loadState() {
+      const raw = localStorage.getItem(APP_KEY);
+      const fallback = { reportsByDate: {}, staffMembers: defaultStaffMembers };
+      if (!raw) return fallback;
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        const parsed = raw ? JSON.parse(raw) : {};
-        return {
-          staffList: Array.isArray(parsed.staffList) && parsed.staffList.length ? parsed.staffList : [...defaultStaff],
-          selectedStaff: parsed.selectedStaff || 'Sonam',
-          reportDate: parsed.reportDate || todayLocalISO(),
-          suiteEntries: Array.isArray(parsed.suiteEntries) ? parsed.suiteEntries : [],
-          commonEntries: Array.isArray(parsed.commonEntries) ? parsed.commonEntries : []
-        };
+        const parsed = JSON.parse(raw);
+        if (!parsed.staffMembers || !Array.isArray(parsed.staffMembers) || !parsed.staffMembers.length) {
+          parsed.staffMembers = defaultStaffMembers;
+        }
+        if (!parsed.reportsByDate) parsed.reportsByDate = {};
+        return parsed;
       } catch {
-        return {
-          staffList: [...defaultStaff],
-          selectedStaff: 'Sonam',
-          reportDate: todayLocalISO(),
-          suiteEntries: [],
-          commonEntries: []
-        };
+        return fallback;
       }
     }
 
     function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem(APP_KEY, JSON.stringify(state));
     }
 
-    function fillSelect(selectEl, items, includeAddNew = false) {
-      selectEl.innerHTML = '';
-      items.forEach(item => {
-        const opt = document.createElement('option');
-        opt.value = item;
-        opt.textContent = item;
-        selectEl.appendChild(opt);
-      });
-      if (includeAddNew) {
-        const add = document.createElement('option');
-        add.value = '__add_new__';
-        add.textContent = '+ Add New Staff';
-        selectEl.appendChild(add);
+    function loadSession() {
+      const raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) return null;
+      try { return JSON.parse(raw); } catch { return null; }
+    }
+
+    function saveSession(data) {
+      if (!data) localStorage.removeItem(SESSION_KEY);
+      else localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+    }
+
+    function getTodayReport() {
+      const key = todayKey();
+      if (!state.reportsByDate[key]) {
+        state.reportsByDate[key] = { date: key, staff: '', role: '', entries: [] };
       }
+      return state.reportsByDate[key];
     }
 
-    function setActiveStatus(containerId, value) {
-      const container = $(containerId);
-      [...container.querySelectorAll('.tap')].forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.value === value);
-      });
+    function getStaffMembers() {
+      return state.staffMembers || defaultStaffMembers;
     }
 
-    function show(el) { el.classList.remove('hidden'); }
-    function hide(el) { el.classList.add('hidden'); }
-
-    function renderAll() {
-      $('reportDate').value = state.reportDate;
-
-      fillSelect($('staffSelect'), state.staffList, true);
-      $('staffSelect').value = state.selectedStaff;
-      fillSelect($('suiteRoom'), suiteRooms);
-      fillSelect($('commonArea'), commonAreas);
-
-      renderEntries('suiteEntries', state.suiteEntries);
-      renderEntries('commonEntries', state.commonEntries);
-      renderAnalytics();
-      renderPreview();
+    function setLoggedInUser(user) {
+      session = { name: user.name, role: user.role };
+      saveSession(session);
+      const report = getTodayReport();
+      report.staff = user.name;
+      report.role = user.role;
       saveState();
+      showApp();
+      renderAll();
     }
 
-    function renderEntries(targetId, items) {
-      const holder = $(targetId);
-      holder.innerHTML = '';
-      if (!items.length) {
-        holder.innerHTML = `<div class="muted">No entries yet.</div>`;
-        return;
-      }
+    function logout() {
+      session = null;
+      saveSession(null);
+      els.pinInput.value = '';
+      els.loginError.classList.add('hidden');
+      els.loginScreen.classList.remove('hidden');
+      els.mainApp.classList.add('hidden');
+    }
 
-      items.forEach(item => {
+    function showApp() {
+      els.loginScreen.classList.add('hidden');
+      els.mainApp.classList.remove('hidden');
+      els.userBadge.textContent = `${session.name} · ${session.role}`;
+      els.todayDate.textContent = niceDate();
+      const isAdmin = session && session.role === 'Admin';
+      els.adminCard.classList.toggle('hidden', !isAdmin);
+    }
+
+    function renderStaffSelects() {
+      const options = getStaffMembers()
+        .map(s => `<option value="${escapeHtml(s.name)}">${escapeHtml(s.name)}</option>`)
+        .join('');
+      els.staffSelect.innerHTML = options;
+      els.pinStaffSelect.innerHTML = options;
+    }
+
+    function renderAreaSelects() {
+      const suiteOptions = ['<option value="">Select suite room</option>']
+        .concat(suiteRooms.map(item => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`))
+        .join('');
+      const commonOptions = ['<option value="">Select common area</option>']
+        .concat(commonAreas.map(item => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`))
+        .join('');
+      els.suiteSelect.innerHTML = suiteOptions;
+      els.commonSelect.innerHTML = commonOptions;
+
+      if (currentSection === 'Suite Room') {
+        els.suiteSelect.value = selectedArea || '';
+        els.commonSelect.value = '';
+      } else {
+        els.commonSelect.value = selectedArea || '';
+        els.suiteSelect.value = '';
+      }
+    }
+
+    function renderEntries() {
+      const report = getTodayReport();
+      const entries = report.entries || [];
+      els.entryList.innerHTML = '';
+      els.emptyState.classList.toggle('hidden', entries.length > 0);
+
+      entries.forEach((entry, index) => {
         const div = document.createElement('div');
         div.className = 'entry';
-        const cls = item.status === 'Cleaned' ? 'cleaned' : item.status === 'Pending' ? 'pending' : 'attention';
         div.innerHTML = `
-          <div class="entry-top">
-            <div>
-              <div><strong>${escapeHtml(item.name)}</strong></div>
-              <div class="muted tiny">${escapeHtml(item.date)} · ${escapeHtml(item.staff)}</div>
-            </div>
-            <div class="pill ${cls}">${escapeHtml(item.status)}</div>
+          <div>
+            <div class="entry-title">${escapeHtml(entry.section)}: ${escapeHtml(entry.area)}</div>
+            <div class="tiny">${escapeHtml(entry.status)} · ${escapeHtml(entry.time || '')}${entry.note ? ' · ' + escapeHtml(entry.note) : ''}</div>
           </div>
-          ${item.note ? `<div class="muted">${escapeHtml(item.note)}</div>` : `<div class="muted tiny">No note</div>`}
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span class="status-tag status-${entry.status}">${escapeHtml(entry.status)}</span>
+            <button class="btn danger" data-delete-index="${index}" style="width:auto; padding:10px 12px; font-size:14px;">Delete</button>
+          </div>
         `;
-        holder.appendChild(div);
+        els.entryList.appendChild(div);
       });
     }
 
-    function renderAnalytics() {
-      const suiteCount = state.suiteEntries.length;
-      const commonCount = state.commonEntries.length;
-      const all = [...state.suiteEntries, ...state.commonEntries];
-      const cleanedCount = all.filter(x => x.status === 'Cleaned').length;
-      const pendingCount = all.filter(x => x.status === 'Pending').length;
-      const attentionCount = all.filter(x => x.status === 'Needs Attention').length;
-
-      $('statStaff').textContent = state.selectedStaff || '-';
-      $('statSuite').textContent = suiteCount;
-      $('statCommon').textContent = commonCount;
-      $('statCleaned').textContent = cleanedCount;
-      $('summaryText').textContent = `Today: ${cleanedCount} cleaned, ${pendingCount} pending, ${attentionCount} need attention.`;
+    function renderMetrics() {
+      const entries = getTodayReport().entries || [];
+      const cleaned = entries.filter(e => e.status === 'Cleaned').length;
+      const pending = entries.filter(e => e.status === 'Pending').length;
+      const issues = entries.filter(e => e.status === 'Issue').length;
+      els.metricEntries.textContent = entries.length;
+      els.metricCleaned.textContent = cleaned;
+      els.metricPending.textContent = pending;
+      els.metricIssues.textContent = issues;
     }
 
-    function makeReportText() {
-      const suiteLines = state.suiteEntries.length
-        ? state.suiteEntries.map(x => `- ${x.name}: ${x.status}${x.note ? ` (${x.note})` : ''}`).join('\n')
-        : '- None';
+    function buildReportText() {
+      const report = getTodayReport();
+      const suites = report.entries.filter(e => e.section === 'Suite Room');
+      const commons = report.entries.filter(e => e.section === 'Common Area');
 
-      const commonLines = state.commonEntries.length
-        ? state.commonEntries.map(x => `- ${x.name}: ${x.status}${x.note ? ` (${x.note})` : ''}`).join('\n')
-        : '- None';
+      function lines(items) {
+        if (!items.length) return '- None';
+        return items.map(i => `- ${i.area}: ${i.status}${i.time ? ' at ' + i.time : ''}${i.note ? ' | Note: ' + i.note : ''}`).join('\n');
+      }
 
       return [
         `Karma Tara Residency - Daily Report`,
-        `Date: ${state.reportDate}`,
-        `Staff: ${state.selectedStaff}`,
+        `Date: ${niceDate()}`,
+        `Staff: ${report.staff || '-'}`,
+        `Role: ${report.role || '-'}`,
+        `Total Entries: ${(report.entries || []).length}`,
         '',
         'Suite Rooms:',
-        suiteLines,
+        lines(suites),
         '',
         'Common Areas:',
-        commonLines
+        lines(commons)
       ].join('\n');
     }
 
-    function renderPreview() {
-      $('preview').value = makeReportText();
+    function renderReport() {
+      els.reportBox.textContent = buildReportText();
     }
 
-    function sendReport() {
-      const text = makeReportText();
-      const url = `https://wa.me/${FIXED_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank');
-    }
-
-    function copyReport() {
-      const text = makeReportText();
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Report copied successfully.');
-      }).catch(() => {
-        $('preview').select();
-        document.execCommand('copy');
-        alert('Report copied.');
+    function renderSectionUI() {
+      document.querySelectorAll('.tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.section === currentSection);
       });
+      els.suiteDropdown.classList.toggle('hidden', currentSection !== 'Suite Room');
+      els.commonDropdown.classList.toggle('hidden', currentSection !== 'Common Area');
+      document.querySelectorAll('.status-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.status === currentStatus);
+      });
+      els.selectedArea.value = selectedArea;
+      renderAreaSelects();
     }
 
-    function addEntry(type) {
-      if (type === 'suite') {
-        const name = $('suiteRoom').value;
-        if (!name || !suiteSelectedStatus) {
-          alert('Please select suite and status.');
-          return;
-        }
-        state.suiteEntries.unshift({
-          name,
-          status: suiteSelectedStatus,
-          note: $('suiteNote').value.trim(),
-          staff: state.selectedStaff,
-          date: state.reportDate
-        });
-        $('suiteNote').value = '';
-        suiteSelectedStatus = '';
-        setActiveStatus('suiteStatusButtons', '');
-        hide($('suiteForm'));
-      } else {
-        const name = $('commonArea').value;
-        if (!name || !commonSelectedStatus) {
-          alert('Please select area and status.');
-          return;
-        }
-        state.commonEntries.unshift({
-          name,
-          status: commonSelectedStatus,
-          note: $('commonNote').value.trim(),
-          staff: state.selectedStaff,
-          date: state.reportDate
-        });
-        $('commonNote').value = '';
-        commonSelectedStatus = '';
-        setActiveStatus('commonStatusButtons', '');
-        hide($('commonForm'));
+    function renderAdminPanel() {
+      if (!session || session.role !== 'Admin') return;
+      els.staffListBox.textContent = getStaffMembers()
+        .map((staff, idx) => `${idx + 1}. ${staff.name} - ${staff.role}`)
+        .join('\n');
+    }
+
+    function renderAll() {
+      renderStaffSelects();
+      renderSectionUI();
+      renderEntries();
+      renderMetrics();
+      renderReport();
+      renderAdminPanel();
+    }
+
+    function updateSelectedAreaFromUI() {
+      selectedArea = currentSection === 'Suite Room'
+        ? els.suiteSelect.value
+        : els.commonSelect.value;
+      els.selectedArea.value = selectedArea;
+    }
+
+    function addEntry() {
+      updateSelectedAreaFromUI();
+      if (!selectedArea) {
+        alert('Please select a suite room or common area first.');
+        return;
       }
+      const report = getTodayReport();
+      report.staff = session.name;
+      report.role = session.role;
+      report.entries.push({
+        section: currentSection,
+        area: selectedArea,
+        status: currentStatus,
+        note: els.entryNote.value.trim(),
+        time: timeStamp()
+      });
+      els.entryNote.value = '';
+      selectedArea = '';
+      saveState();
       renderAll();
     }
 
-    function resetToday() {
-      if (!confirm('Reset all today\'s suite and common area entries?')) return;
-      state.suiteEntries = [];
-      state.commonEntries = [];
+    function showAdminMessage(message, isError = false) {
+      els.adminMessage.classList.add('hidden');
+      els.adminError.classList.add('hidden');
+      if (isError) {
+        els.adminError.textContent = message;
+        els.adminError.classList.remove('hidden');
+      } else {
+        els.adminMessage.textContent = message;
+        els.adminMessage.classList.remove('hidden');
+      }
+    }
+
+    function addStaff() {
+      const name = els.newStaffName.value.trim();
+      const pin = els.newStaffPin.value.trim();
+      if (!name) return showAdminMessage('Please enter staff name.', true);
+      if (!/^\d{4}$/.test(pin)) return showAdminMessage('PIN must be exactly 4 digits.', true);
+      const exists = getStaffMembers().some(s => s.name.toLowerCase() === name.toLowerCase());
+      if (exists) return showAdminMessage('Staff name already exists.', true);
+      state.staffMembers.push({ name, pin, role: 'Staff' });
+      saveState();
+      els.newStaffName.value = '';
+      els.newStaffPin.value = '';
+      renderAll();
+      showAdminMessage(`${name} added successfully.`);
+    }
+
+    function updatePin() {
+      const name = els.pinStaffSelect.value;
+      const pin = els.updatedPin.value.trim();
+      if (!/^\d{4}$/.test(pin)) return showAdminMessage('New PIN must be exactly 4 digits.', true);
+      const staff = getStaffMembers().find(s => s.name === name);
+      if (!staff) return showAdminMessage('Staff not found.', true);
+      staff.pin = pin;
+      saveState();
+      els.updatedPin.value = '';
+      showAdminMessage(`PIN updated for ${name}.`);
+    }
+
+    async function copyReport() {
+      const text = buildReportText();
+      try {
+        await navigator.clipboard.writeText(text);
+        alert('Report copied.');
+      } catch {
+        alert('Could not copy automatically. Please select and copy manually.');
+      }
+    }
+
+    function downloadReport() {
+      const report = buildReportText();
+      const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `KTR_Daily_Report_${todayKey()}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function sendWhatsApp() {
+      const text = encodeURIComponent(buildReportText());
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+    }
+
+    function clearToday() {
+      const ok = confirm('Clear all today entries?');
+      if (!ok) return;
+      const report = getTodayReport();
+      report.entries = [];
+      saveState();
       renderAll();
     }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
-    function bindTapButtons(containerId, assign) {
-      $(containerId).addEventListener('click', (e) => {
-        const btn = e.target.closest('.tap');
-        if (!btn) return;
-        assign(btn.dataset.value);
-        setActiveStatus(containerId, btn.dataset.value);
-      });
+    document.addEventListener('click', (e) => {
+      const tab = e.target.closest('.tab');
+      if (tab) {
+        currentSection = tab.dataset.section;
+        selectedArea = '';
+        renderSectionUI();
+        return;
+      }
+
+
+      const statusBtn = e.target.closest('.status-btn');
+      if (statusBtn) {
+        currentStatus = statusBtn.dataset.status;
+        renderSectionUI();
+        return;
+      }
+
+      const deleteBtn = e.target.closest('[data-delete-index]');
+      if (deleteBtn) {
+        const idx = Number(deleteBtn.dataset.deleteIndex);
+        getTodayReport().entries.splice(idx, 1);
+        saveState();
+        renderAll();
+      }
+    });
+
+    els.loginBtn.addEventListener('click', () => {
+      const selectedName = els.staffSelect.value;
+      const pin = els.pinInput.value.trim();
+      const matched = getStaffMembers().find(s => s.name === selectedName && s.pin === pin);
+      if (!matched) {
+        els.loginError.classList.remove('hidden');
+        return;
+      }
+      els.loginError.classList.add('hidden');
+      els.pinInput.value = '';
+      setLoggedInUser(matched);
+    });
+
+    els.pinInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') els.loginBtn.click();
+    });
+
+    els.suiteSelect.addEventListener('change', () => {
+      if (currentSection !== 'Suite Room') return;
+      selectedArea = els.suiteSelect.value;
+      els.selectedArea.value = selectedArea;
+    });
+
+    els.commonSelect.addEventListener('change', () => {
+      if (currentSection !== 'Common Area') return;
+      selectedArea = els.commonSelect.value;
+      els.selectedArea.value = selectedArea;
+    });
+
+    els.logoutBtn.addEventListener('click', logout);
+    els.addEntryBtn.addEventListener('click', addEntry);
+    els.copyReportBtn.addEventListener('click', copyReport);
+    els.downloadReportBtn.addEventListener('click', downloadReport);
+    els.whatsappBtn.addEventListener('click', sendWhatsApp);
+    els.clearTodayBtn.addEventListener('click', clearToday);
+    els.addStaffBtn.addEventListener('click', addStaff);
+    els.updatePinBtn.addEventListener('click', updatePin);
+
+    renderStaffSelects();
+    renderAreaSelects();
+
+    if (session && session.name) {
+      const stillExists = getStaffMembers().find(s => s.name === session.name && s.role === session.role);
+      if (stillExists) {
+        showApp();
+        renderAll();
+      } else {
+        logout();
+      }
+    } else {
+      logout();
     }
-
-    function init() {
-      renderAll();
-
-      $('staffSelect').addEventListener('change', (e) => {
-        const value = e.target.value;
-        if (value === '__add_new__') {
-          show($('newStaffWrap'));
-          $('newStaffInput').focus();
-          return;
-        }
-        hide($('newStaffWrap'));
-        state.selectedStaff = value;
-        renderAll();
-      });
-
-      $('saveStaffBtn').addEventListener('click', () => {
-        const name = $('newStaffInput').value.trim();
-        if (!name) {
-          alert('Please enter staff name.');
-          return;
-        }
-        if (!state.staffList.includes(name)) state.staffList.push(name);
-        state.selectedStaff = name;
-        $('newStaffInput').value = '';
-        hide($('newStaffWrap'));
-        renderAll();
-      });
-
-      $('reportDate').addEventListener('change', (e) => {
-        state.reportDate = e.target.value || todayLocalISO();
-        renderAll();
-      });
-
-      $('addSuiteBtn').addEventListener('click', () => {
-        show($('suiteForm'));
-        $('suiteRoom').focus();
-      });
-
-      $('cancelSuiteBtn').addEventListener('click', () => hide($('suiteForm')));
-      $('saveSuiteBtn').addEventListener('click', () => addEntry('suite'));
-
-      $('addCommonBtn').addEventListener('click', () => {
-        show($('commonForm'));
-        $('commonArea').focus();
-      });
-
-      $('cancelCommonBtn').addEventListener('click', () => hide($('commonForm')));
-      $('saveCommonBtn').addEventListener('click', () => addEntry('common'));
-
-      bindTapButtons('suiteStatusButtons', (value) => suiteSelectedStatus = value);
-      bindTapButtons('commonStatusButtons', (value) => commonSelectedStatus = value);
-
-      $('whatsappBtn').addEventListener('click', sendReport);
-      $('copyBtn').addEventListener('click', copyReport);
-      $('resetBtn').addEventListener('click', resetToday);
-    }
-
-    init();
   </script>
 </body>
 </html>
